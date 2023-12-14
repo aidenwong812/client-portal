@@ -2,8 +2,13 @@ import { lazy, useEffect } from 'react'
 import './App.css'
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { themeChange } from 'theme-change';
+import checkAuth from './app/auth';
 
 const Layout = lazy(() => import('./containers/Layout'));
+const Login = lazy(() => import('./pages/Login'));
+
+// Check for login and initialize axios
+const token = checkAuth()
 
 function App() {
 
@@ -15,9 +20,11 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
+
         <Route path="/app/*" element={<Layout />} />
 
-        <Route path="*" element={<Navigate to="/app/knowledge-base" replace />} />
+        <Route path="*" element={<Navigate to={token ? "/app/assistants" : "/login"} replace />} />
       </Routes>
     </Router>
   )

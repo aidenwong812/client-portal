@@ -20,7 +20,7 @@ const LeftSidebar = () => {
 
         <li className="mb-2 font-semibold text-xl">
 
-          <Link to={'/'}><img className="mask mask-squircle w-10" src="/logo.png" alt="ChatBot Logo" />ChatBot Admin</Link> </li>
+          <Link to={'/'}><img className="mask mask-squircle w-10" src="/logo.png" alt="ChatBot Logo" />Client Portal</Link> </li>
         {
           routes.map((route, k) => {
             return (

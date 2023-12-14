@@ -24,7 +24,7 @@ function AssistantCard({ assistant }: PropTypes) {
   }
 
   const editCurrentAssistant = () => {
-    dispatch(openModal({ title: "Edit Assistant", bodyType: MODAL_BODY_TYPES.PRE_PROMPT_UPDATE, extraObject: { id: assistant.id, asssitant_name: assistant.assistant_name } }))
+    dispatch(openModal({ title: "Edit Assistant", bodyType: MODAL_BODY_TYPES.ASSISTANT_UPDATE, extraObject: { id: assistant.id, assistant_name: assistant.assistant_name } }))
   }
 
   return (
