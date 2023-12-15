@@ -1,29 +1,30 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from "@react-oauth/google";
-// import LandingIntro from './LandingIntro'
+import { useGoogleLogin } from '@react-oauth/google'
+import axios from 'axios'
 import ErrorText from '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
-import axios from 'axios';
 
-function Login() {
+function Register() {
 
-  const INITIAL_LOGIN_OBJ = {
+  const INITIAL_REGISTER_OBJ = {
+    name: "",
     password: "",
     email: ""
   }
 
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
-  const [loginObj, setLoginObj] = useState(INITIAL_LOGIN_OBJ)
+  const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ)
 
   const navigate = useNavigate()
 
   const handleAuth = () => {
     setErrorMessage("")
 
-    if (loginObj.email.trim() === "") return setErrorMessage("Email is required!")
-    if (loginObj.password.trim() === "") return setErrorMessage("Password is required!")
+    if (registerObj.name.trim() === "") return setErrorMessage("Name is required!")
+    if (registerObj.email.trim() === "") return setErrorMessage("Email is required!")
+    if (registerObj.password.trim() === "") return setErrorMessage("Password is required!")
     else {
       setLoading(true)
       // Call API to check user credentials and save token in localstorage
@@ -56,7 +57,7 @@ function Login() {
 
   const updateFormValue = (updateType: string, value: string) => {
     setErrorMessage("")
-    setLoginObj({ ...loginObj, [updateType]: value })
+    setRegisterObj({ ...registerObj, [updateType]: value })
   }
 
   return (
@@ -64,21 +65,20 @@ function Login() {
       <div className="card mx-auto w-full max-w-[90%] shadow-xl sm:max-w-xl">
         <div className="grid grid-cols-1 bg-base-100 rounded-xl">
           {/* <div className=''>
-            <LandingIntro />
-          </div> */}
+                        <LandingIntro />
+                    </div> */}
           <div className='py-24 px-10'>
-            <h2 className='text-2xl font-semibold mb-2 text-center'>Login</h2>
+            <h2 className='text-2xl font-semibold mb-2 text-center'>Register</h2>
             <div className='flex flex-col'>
 
               <div className="mb-4">
 
-                <InputText type="email" defaultValue={loginObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email" updateFormValue={updateFormValue} />
+                <InputText type='text' defaultValue={registerObj.name} updateType="name" containerStyle="mt-4" labelTitle="Name" updateFormValue={updateFormValue} />
 
-                <InputText defaultValue={loginObj.password} type="password" updateType="password" containerStyle="mt-4" labelTitle="Password" updateFormValue={updateFormValue} />
+                <InputText type='email' defaultValue={registerObj.email} updateType="email" containerStyle="mt-4" labelTitle="Email" updateFormValue={updateFormValue} />
 
-              </div>
+                <InputText type="password" defaultValue={registerObj.password} updateType="password" containerStyle="mt-4" labelTitle="Password" updateFormValue={updateFormValue} />
 
-              <div className='text-right text-primary'><Link to="/forgot-password"><span className="text-sm  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">Forgot Password?</span></Link>
               </div>
 
               <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
@@ -86,17 +86,17 @@ function Login() {
                 className={"btn mt-2 w-full btn-primary" + (loading ? " loading" : "")}
                 onClick={() => handleAuth()}
               >
-                SIGN IN
+                SIGN UP
               </button>
               <button
                 className={"btn btn-primary mt-2 w-full" + (loading ? " loading" : "")}
                 onClick={() => handleGoogleAuth()}
               >
                 <i className="fab fa-google" />
-                <p>SIGN IN WITH GOOGLE</p>
+                <p>SIGN UP WITH GOOGLE</p>
               </button>
 
-              <div className='text-center mt-4'>Don't have an account yet? <Link to="/register"><span className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">SIGNUP</span></Link></div>
+              <div className='text-center mt-4'>Already have an account? <Link to="/login"><span className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">SIGN IN</span></Link></div>
             </div>
           </div>
         </div>
@@ -105,4 +105,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Register
