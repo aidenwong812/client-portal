@@ -43,6 +43,12 @@ export const assistantsSlice = createSlice({
     assistants: [{
       id: "",
       assistant_name: "",
+      description: "",
+      mainColor: "blue",
+      launcherImage: "/logo.png",
+      assistantImage: "/logo.png",
+      assistantAvatar: "/logo.png",
+      greeting: "How can I help you",
       date: ""
     }]
   },

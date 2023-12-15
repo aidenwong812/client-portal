@@ -45,24 +45,22 @@ function Assistants() {
 
   return (
     <>
+      <div className="flex items-center justify-between">
+        <SearchBar searchText={searchText} styleClass="ml-4" setSearchText={setSearchText} />
+        <button tabIndex={0} className="btn px-3 btn-sm normal-case btn-primary text-white sm:px-6" onClick={() => openAddNewAssistantModal()}>
+          <PlusSmallIcon className="w-6 h-6 sm:hidden" />
+          <span className="hidden sm:block">Add New</span>
+        </button>
+      </div>
       {
         assistant.length !== 1 || assistant[0].assistant_name !== "" ? (
-          <>
-            <div className="flex items-center justify-between">
-              <SearchBar searchText={searchText} styleClass="ml-4" setSearchText={setSearchText} />
-              <button tabIndex={0} className="btn px-3 btn-sm normal-case btn-primary text-white sm:px-6" onClick={() => openAddNewAssistantModal()}>
-                <PlusSmallIcon className="w-6 h-6 sm:hidden" />
-                <span className="hidden sm:block">Add New</span>
-              </button>
-            </div>
-            <div className="grid mt-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              {
-                assistant.map((a, k) => a.assistant_name && (
-                  <AssistantCard key={k} assistant={a} />
-                ))
-              }
-            </div>
-          </>
+          <div className="grid mt-4 grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            {
+              assistant.map((a, k) => a.assistant_name && (
+                <AssistantCard key={k} assistant={a} />
+              ))
+            }
+          </div>
         ) : (
           <div className="text-2xl flex justify-center items-center gap-2 text-center">
             <FaceFrownIcon className="w-12 h-12" />

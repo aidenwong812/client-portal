@@ -8,7 +8,7 @@ import SearchBar from "../../components/Input/SearchBar"
 // import XMarkIcon from "@heroicons/react/24/solid/XMarkIcon"
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
 import PlusSmallIcon from '@heroicons/react/24/outline/PlusSmallIcon'
-import { Cog6ToothIcon, FaceFrownIcon } from "@heroicons/react/24/outline"
+import { FaceFrownIcon } from "@heroicons/react/24/outline"
 import { openModal } from "../common/modalSlice"
 import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../utils/globalConstantUtil"
 import { AppDispatch, RootState } from "../../app/store"
@@ -113,11 +113,6 @@ function KnowledgeBase() {
     setSelectedAssistance(e.target.value)
   }
 
-  const openAssistantSettingModal = () => {
-    // dispatch(openModal({ title: "Add New Assistant", bodyType: MODAL_BODY_TYPES.ASSISTANT_ADD_NEW }))
-    setAssistantModalOpen(true)
-  }
-
   const handleAssistantModalOpen = () => {
     setAssistantModalOpen(false);
   }
@@ -132,10 +127,6 @@ function KnowledgeBase() {
           ))
         }
       </select>
-      <button tabIndex={0} className="btn px-3 btn-sm normal-case btn-neutral text-white" onClick={() => openAssistantSettingModal()}>
-        {/* <PlusSmallIcon className="w-6 h-6" /> */}
-        <Cog6ToothIcon className="w-5 h-5" />
-      </button>
     </div>
   )
 
