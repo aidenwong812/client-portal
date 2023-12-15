@@ -1,6 +1,6 @@
 // import Squares2X2Icon from '@heroicons/react/24/outline/Squares2X2Icon'
 import { SideMenu } from '../utils/Type';
-// import { CircleStackIcon } from '@heroicons/react/24/outline';
+import { CircleStackIcon } from '@heroicons/react/24/outline';
 import ServerStackIcon from '@heroicons/react/24/outline/ServerStackIcon';
 // import QueueListIcon from '@heroicons/react/24/outline/QueueListIcon';
 
@@ -18,11 +18,11 @@ const routes: SideMenu = [
     icon: <ServerStackIcon className={iconClasses} />,
     name: 'Assistants',
   },
-  // {
-  //   path: '/app/knowledge-base',
-  //   icon: <CircleStackIcon className={iconClasses} />,
-  //   name: 'Knowledge Base',
-  // },
+  {
+    path: '/app/knowledge-base',
+    icon: <CircleStackIcon className={iconClasses} />,
+    name: 'Knowledge Base',
+  },
   // {
   //   path: '/app/prompts',
   //   icon: <QueueListIcon className={iconClasses} />,
