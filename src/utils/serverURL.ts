@@ -32,3 +32,16 @@ export const ASSISTANT_API = {
   DELETE_ASSISTANT: API_Address + "/del_assistant",     // post
   UPDATE_ASSISTANT: API_Address + "/update_assistant",     // post
 }
+
+export const RUNTIME_API_ADDRESS = import.meta.env.VITE_RUNTIME_ENDPOINT
+
+export const KNOWLEDGE_BASE_RUNTIME_API = {
+  ADD_FAQ: RUNTIME_API_ADDRESS + "/knowledge-base/faqs",      // post
+  GET_FAQS: RUNTIME_API_ADDRESS + "/knowledge-base/faqs",     // get
+  GET_FAQ: RUNTIME_API_ADDRESS + "/knowledge-base/faqs/:faqSetID",     // get
+  DELETE_FAQ: RUNTIME_API_ADDRESS + "/knowledge-base/faqs/:faqSetID",     // delete
+
+  ADD_DOCUMENT: RUNTIME_API_ADDRESS + "/knowledge-base/docs/upload?maxChunkSize=1000",      // post
+  GET_DOCUMENTS: RUNTIME_API_ADDRESS + "/knowledge-base/docs",     // get
+  DELETE_DOCUMENT: RUNTIME_API_ADDRESS + "/knowledge-base/docs/:documentID",     // delete
+}
