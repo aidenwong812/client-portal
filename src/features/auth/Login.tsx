@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google"
 // import LandingIntro from './LandingIntro'
 import ErrorText from '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
@@ -27,29 +27,56 @@ function Login() {
     else {
       setLoading(true)
       // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere")
-      setLoading(false)
-      navigate('/app/assistants')
+      axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/login`, {
+        email: loginObj.email,
+        password: loginObj.password
+      })
+        .then(res => {
+          if (res.status === 200) {
+            localStorage.setItem("token", res.data.result)
+            setLoading(false)
+            navigate('/app/assistants')
+          }
+          setLoading(false)
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false)
+          if (err.response.data.result) {
+            setErrorMessage(err.response.data.result)
+          }
+        })
     }
   }
 
   const handleGoogleAuth = useGoogleLogin({
     onSuccess: tokenResponse => {
-      console.log(tokenResponse);
       axios.get('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + tokenResponse.access_token)
         .then(res => {
-          console.log(res);
+          if (res.data) {
+            if (!res.data.verified_email) return setErrorMessage("Please verify your email!")
+
+            axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/google_auth`, {
+              name: res.data.name,
+              email: res.data.email,
+            })
+              .then(res => {
+                if (res.status === 200 || res.status === 201) {
+                  localStorage.setItem("token", res.data.result)
+                  setLoading(false)
+                  navigate('/app/assistants')
+                }
+                setLoading(false)
+              })
+          }
         })
         .catch(err => {
           console.log(err);
+          setLoading(false)
+          if (err.response.data.result) {
+            setErrorMessage(err.response.data.result)
+          }
         })
-      // axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/login_oauth`, {
-      //   googleToken: tokenResponse,
-      // })
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(err => console.log(err));
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -83,13 +110,15 @@ function Login() {
 
               <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
               <button
-                className={"btn mt-2 w-full btn-primary" + (loading ? " loading" : "")}
+                className="btn mt-2 w-full btn-primary"
                 onClick={() => handleAuth()}
               >
-                SIGN IN
+                <span className={loading ? "loading loading-spinner" : ""}>
+                  SIGN IN
+                </span>
               </button>
               <button
-                className={"btn btn-primary mt-2 w-full" + (loading ? " loading" : "")}
+                className="btn btn-primary mt-2 w-full"
                 onClick={() => handleGoogleAuth()}
               >
                 <i className="fab fa-google" />

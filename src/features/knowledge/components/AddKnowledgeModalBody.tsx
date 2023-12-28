@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react"
 import { useDispatch } from "react-redux"
-import InputText from '../../../components/Input/InputText'
+import PlusSmallIcon from '@heroicons/react/24/outline/PlusSmallIcon'
+// import InputText from '../../../components/Input/InputText'
+import InputFAQ from "../../../components/Input/InputFAQ"
 import ErrorText from '../../../components/Typography/ErrorText'
 import { showNotification } from "../../common/headerSlice"
 import { addNewKnowledge, updateKnowledge } from "../knowledgeSlice"
@@ -37,7 +39,7 @@ function AddKnowledgeModalBody({ closeModal, extraObject }: PropTypes) {
   const saveNewKnowledge = () => {
     if (knowledge.name.trim() === "") return setErrorMessage("Incorrect Input!")
     else {
-      let newKnowledge = {
+      const newKnowledge = {
         name: knowledge.name,
         type_of_knowledge: knowledge.type,
         assistant_id: extraObject.assistant_id,
@@ -72,10 +74,10 @@ function AddKnowledgeModalBody({ closeModal, extraObject }: PropTypes) {
     }
   }
 
-  const updateFormValue = (updateType: string, value: string | File) => {
-    setErrorMessage("")
-    setKnowledge({ ...knowledge, [updateType]: value })
-  }
+  // const updateFormValue = (updateType: string, value: string | File) => {
+  //   setErrorMessage("")
+  //   setKnowledge({ ...knowledge, [updateType]: value })
+  // }
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -84,13 +86,26 @@ function AddKnowledgeModalBody({ closeModal, extraObject }: PropTypes) {
     }
   }
 
+  const addFAQ = () => {
+    setKnowledge({ ...knowledge, type: "FAQ" })
+  }
+
+  const handleDelete = (id: string) => {
+    console.log(id)
+  }
+
   return (
     <>
       {
-        knowledge.type === "URL" ? (
-          <InputText type="text" defaultValue={knowledge.name ? knowledge.name : ""} updateType="name" containerStyle="mt-4" labelTitle="URL" updateFormValue={updateFormValue} />
+        knowledge.type === "FAQ" ? (
+          <div className="flex flex-col gap-2">
+            <InputFAQ id="1" handleDelete={handleDelete} />
+            <button className="btn w-full flex justify-between" onClick={addFAQ}>
+              <span className="font-semibold">Add FAQ</span>
+              <PlusSmallIcon className="w-4 h-4" />
+            </button>
+          </div>
         ) : (
-          // <InputFile defaultValue={knowledge.name ? knowledge.name : ""} updateType="name" containerStyle="mt-4" labelTitle="File" updateFormValue={updateFormValue} acceptedFile=".txt, .xlsx" />
           <div className="form-control w-full mt-4">
             <label className="label">
               <span className="label-text text-base-content"> File </span>

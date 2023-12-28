@@ -28,9 +28,29 @@ function Register() {
     else {
       setLoading(true)
       // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere")
-      setLoading(false)
-      navigate('/app/assistants')
+      axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/register`, {
+        name: registerObj.name,
+        email: registerObj.email,
+        password: registerObj.password,
+      })
+        .then(res => {
+          console.log(res);
+          if (res.status === 201) {
+            localStorage.setItem("token", res.data.result)
+            setLoading(false)
+            navigate('/app/assistants')
+          }
+          setLoading(false)
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false)
+          if (err?.response) {
+            if (err.response?.status === 409) {
+              return setErrorMessage("User already exists!")
+            }
+          }
+        })
     }
   }
 
@@ -39,7 +59,17 @@ function Register() {
       console.log(tokenResponse);
       axios.get('https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + tokenResponse.access_token)
         .then(res => {
-          console.log(res);
+          if (res.data) {
+            if (!res.data.verified_email) return setErrorMessage("Please verify your email!")
+
+            axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/google_auth`, {
+              email: res.data.email,
+              name: res.data.name
+            })
+              .then(res => {
+                console.log(res);
+              })
+          }
         })
         .catch(err => {
           console.log(err);

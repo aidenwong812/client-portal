@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.0.18",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.0.1",
+    "@tailwindcss/typography": "^0.5.10",
     "axios": "^1.6.2",
     "moment": "^2.29.4",
     "react": "^18.2.0",

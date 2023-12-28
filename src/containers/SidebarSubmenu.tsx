@@ -22,7 +22,7 @@ function SidebarSubmenu({ submenu, name, icon }: PropTypes) {
 	}, [])
 
 	return (
-		<div className='flex-col'>
+		<div className='flex flex-col'>
 
 			{/** Route header */}
 			<div className='w-full' onClick={() => setIsExpanded(!isExpanded)}>

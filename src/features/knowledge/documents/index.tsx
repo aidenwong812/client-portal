@@ -2,19 +2,19 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 // import { showNotification } from "../common/headerSlice"
-import TitleCard from "../../components/Cards/TitleCard"
-import SearchBar from "../../components/Input/SearchBar"
+import TitleCard from "../../../components/Cards/TitleCard"
+import SearchBar from "../../../components/Input/SearchBar"
 // import { CheckIcon } from "@heroicons/react/24/solid"
 // import XMarkIcon from "@heroicons/react/24/solid/XMarkIcon"
 import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
 import PlusSmallIcon from '@heroicons/react/24/outline/PlusSmallIcon'
 import { FaceFrownIcon } from "@heroicons/react/24/outline"
-import { openModal } from "../common/modalSlice"
-import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../utils/globalConstantUtil"
-import { AppDispatch, RootState } from "../../app/store"
-import { getKnowledgeContent } from "./knowledgeSlice"
-import { getAssistantContent } from "../assistants/assistantsSlice"
-import AssistantSettingModal from "./components/AssistantSettingModal"
+import { openModal } from "../../common/modalSlice"
+import { CONFIRMATION_MODAL_CLOSE_TYPES, MODAL_BODY_TYPES } from "../../../utils/globalConstantUtil"
+import { AppDispatch, RootState } from "../../../app/store"
+import { getKnowledgeContent } from "../knowledgeSlice"
+import { getAssistantContent } from "../../assistants/assistantsSlice"
+import AssistantSettingModal from "../components/AssistantSettingModal"
 
 type PropTypes = {
   applySearch: (value: string) => void,
@@ -61,7 +61,7 @@ const TopSideButtons = ({ applySearch, selected }: PropTypes) => {
 }
 
 
-function KnowledgeBase() {
+function Documents() {
 
   const { knowledges, isLoading } = useSelector((state: RootState) => state.knowledge)
   const { assistants } = useSelector((state: RootState) => state.assistant)
@@ -191,5 +191,4 @@ function KnowledgeBase() {
   )
 }
 
-
-export default KnowledgeBase
+export default Documents
