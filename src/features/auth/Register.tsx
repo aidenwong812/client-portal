@@ -26,31 +26,31 @@ function Register() {
     if (registerObj.email.trim() === "") return setErrorMessage("Email is required!")
     if (registerObj.password.trim() === "") return setErrorMessage("Password is required!")
     else {
-      setLoading(true)
+      // setLoading(true)
       // Call API to check user credentials and save token in localstorage
-      axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/register`, {
-        name: registerObj.name,
-        email: registerObj.email,
-        password: registerObj.password,
-      })
-        .then(res => {
-          console.log(res);
-          if (res.status === 201) {
-            localStorage.setItem("token", res.data.result)
-            setLoading(false)
-            navigate('/app/assistants')
-          }
-          setLoading(false)
-        })
-        .catch(err => {
-          console.log(err);
-          setLoading(false)
-          if (err?.response) {
-            if (err.response?.status === 409) {
-              return setErrorMessage("User already exists!")
-            }
-          }
-        })
+      // axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/register`, {
+      //   name: registerObj.name,
+      //   email: registerObj.email,
+      //   password: registerObj.password,
+      // })
+      //   .then(res => {
+      //     console.log(res);
+      //     if (res.status === 201) {
+      //       localStorage.setItem("token", res.data.result)
+      //       setLoading(false)
+      navigate('/app/assistants')
+      //   }
+      //   setLoading(false)
+      // })
+      // .catch(err => {
+      //   console.log(err);
+      //   setLoading(false)
+      //   if (err?.response) {
+      //     if (err.response?.status === 409) {
+      //       return setErrorMessage("User already exists!")
+      //     }
+      //   }
+      // })
     }
   }
 
@@ -62,17 +62,25 @@ function Register() {
           if (res.data) {
             if (!res.data.verified_email) return setErrorMessage("Please verify your email!")
 
-            axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/google_auth`, {
-              email: res.data.email,
-              name: res.data.name
-            })
-              .then(res => {
-                console.log(res);
-              })
+            // axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/google_auth`, {
+            //   email: res.data.email,
+            //   name: res.data.name
+            // })
+            //   .then(res => {
+            //     if (res.status === 200 || res.status === 201) {
+            //       localStorage.setItem("token", res.data.result)
+            //       setLoading(false)
+                  navigate('/app/assistants')
+              //   }
+              //   setLoading(false)
+              // })
           }
         })
         .catch(err => {
-          console.log(err);
+          setLoading(false)
+          if (err.response.data.result) {
+            setErrorMessage(err.response.data.result)
+          }
         })
       // axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/login_oauth`, {
       //   googleToken: tokenResponse,

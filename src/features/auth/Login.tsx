@@ -25,27 +25,27 @@ function Login() {
     if (loginObj.email.trim() === "") return setErrorMessage("Email is required!")
     if (loginObj.password.trim() === "") return setErrorMessage("Password is required!")
     else {
-      setLoading(true)
+      // setLoading(true)
       // Call API to check user credentials and save token in localstorage
-      axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/login`, {
-        email: loginObj.email,
-        password: loginObj.password
-      })
-        .then(res => {
-          if (res.status === 200) {
-            localStorage.setItem("token", res.data.result)
-            setLoading(false)
+      // axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/login`, {
+      //   email: loginObj.email,
+      //   password: loginObj.password
+      // })
+      //   .then(res => {
+      //     if (res.status === 200) {
+      //       localStorage.setItem("token", res.data.result)
+      //       setLoading(false)
             navigate('/app/assistants')
-          }
-          setLoading(false)
-        })
-        .catch(err => {
-          console.log(err);
-          setLoading(false)
-          if (err.response.data.result) {
-            setErrorMessage(err.response.data.result)
-          }
-        })
+        //   }
+        //   setLoading(false)
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        //   setLoading(false)
+        //   if (err.response.data.result) {
+        //     setErrorMessage(err.response.data.result)
+        //   }
+        // })
     }
   }
 
